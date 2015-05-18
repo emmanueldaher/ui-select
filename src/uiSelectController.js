@@ -39,6 +39,8 @@ uis.controller('uiSelectCtrl',
   ctrl.clickTriggeredSelect = false;
   ctrl.$filter = $filter;
 
+  ctrl.preventPageScroll = undefined; //Initialized inside uiSelect directive link function
+
   ctrl.searchInput = $element.querySelectorAll('input.ui-select-search');
   if (ctrl.searchInput.length !== 1) {
     throw uiSelectMinErr('searchInput', "Expected 1 input.ui-select-search but got '{0}'.", ctrl.searchInput.length);

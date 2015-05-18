@@ -47,6 +47,18 @@ uis.directive('uiSelectChoices',
         if (rowsInner.length !== 1) throw uiSelectMinErr('rows', "Expected 1 .ui-select-choices-row-inner but got '{0}'.", rowsInner.length);
         rowsInner.attr('uis-transclude-append', ''); //Adding uisTranscludeAppend directive to row element after choices element has ngRepeat
 
+        if ($select.preventPageScroll) {// Prevent the whole page for scrolling when the choices ul reaches it's scroll limits.
+          element.bind('mousewheel', function(event) {
+            var heightDif = this.offsetHeight - this.clientHeight,
+                maxScrollTop = this.scrollHeight - this.offsetHeight + heightDif;
+
+            if ((this.scrollTop === maxScrollTop && event.deltaY > 0) ||
+                (this.scrollTop === 0 && event.deltaY < 0)) {
+              event.preventDefault();
+            }
+          });
+        }
+
         $compile(element, transcludeFn)(scope); //Passing current transcludeFn to be able to append elements correctly from uisTranscludeAppend
 
         scope.$watch('$select.search', function(newValue) {

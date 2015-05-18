@@ -41,6 +41,14 @@ uis.directive('uiSelect',
           }
         }();
 
+        $select.preventPageScroll = function() {
+          if (angular.isDefined(attrs.preventPageScroll)) {
+            return $parse(attrs.preventPageScroll)();
+          } else {
+            return uiSelectConfig.preventPageScroll;
+          }
+        }();
+
         $select.onSelectCallback = $parse(attrs.onSelect);
         $select.onRemoveCallback = $parse(attrs.onRemove);
         
